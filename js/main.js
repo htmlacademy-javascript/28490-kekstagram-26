@@ -1,22 +1,18 @@
-const min = 50;
-const max = 80;
+const MIN = 50;
+const MAX = 80;
+const COMMENT = 'dmk,lkjhgf ddhl;lkjhgsdfg hjmk,lkjhgfdmk,lkjhgfd';
+const MAX_LENGTH = 140;
 
-// eslint-disable-next-line no-unused-vars
-function getRandom() {
-  if ((min < 0 || max < 0) || (min > max)) {
-    return ('Условия не соблюдены');
-  }
-  return Math.floor(Math.random() * (max - min)) + min;
-}
+const checkStringLength = () => COMMENT.length <= MAX_LENGTH;
 
-const txt = 'dmk,lkjhgf ddhl;lkjhgsdfg hjmk,lkjhgfdmk,lkjhgfd';
-const maxLength = 140;
+checkStringLength(COMMENT, MAX_LENGTH);
 
-// eslint-disable-next-line no-unused-vars
-function lengthString() {
-  if (txt.length <= maxLength) {
-    return true;
-  } else {
-    return false;
-  }
-}
+// eslint-disable-next-line no-shadow
+const getRandomIntInclusive = (MIN, MAX) => {
+  MIN = Math.ceil(MIN);
+  MAX = Math.floor(MAX);
+
+  return Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
+};
+
+getRandomIntInclusive(MIN, MAX);
