@@ -18,7 +18,6 @@ ITEMS.NAMES = [
   'Osaka'
 ];
 
-
 const getRandomIntInclusive = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -39,3 +38,4 @@ for (let i = 1; i < 26; i++) {
     message: ITEMS.COMMENTS[COMMENT_NUMBER]
   };
 }
+
