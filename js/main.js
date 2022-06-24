@@ -8,7 +8,6 @@ ITEMS.COMMENT = [
   'Лица у людей на фотке перекошены, как будто их избивают.Как можно было поймать такой неудачный момент ? !'
 ];
 
-
 const getRandomIntInclusive = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -25,3 +24,4 @@ for (let i = 1; i < 26; i++) {
     Likes: LIKES,
   };
 }
+
