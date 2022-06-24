@@ -1,11 +1,21 @@
 const ITEMS = [];
-ITEMS.COMMENT = [
+ITEMS.COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо.Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра.В конце концов это просто непрофессионально.',
   'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают.Как можно было поймать такой неудачный момент ? !'
+];
+ITEMS.NAMES = [
+  'Sasha',
+  'Mike',
+  'Dani',
+  'Rob',
+  'Maria',
+  'Nikole',
+  'Misha',
+  'Osaka'
 ];
 
 
@@ -17,11 +27,15 @@ const getRandomIntInclusive = (min, max) => {
 
 for (let i = 1; i < 26; i++) {
   const AVATAR_NUMBER = getRandomIntInclusive(1, 6);
-  const LIKES = getRandomIntInclusive(15,200);
+  const LIKES = getRandomIntInclusive(15, 200);
+  const COMMENT_NUMBER = getRandomIntInclusive(0, 5);
+  const NAME_NUMBER = getRandomIntInclusive(0, 7);
   ITEMS[i] = {
+    Name: ITEMS.NAMES[NAME_NUMBER],
     ID: i,
     URL: `photos/${i}.jpg`,
     Avatar: `img / avatar${AVATAR_NUMBER}.svg`,
     Likes: LIKES,
+    message: ITEMS.COMMENTS[COMMENT_NUMBER]
   };
 }
