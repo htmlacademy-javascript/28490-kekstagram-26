@@ -62,7 +62,7 @@ for (let i = 1; i < 26; i++) {
     likes: likes,
     comments: {
       id: getRandomIntInclusive(1, 100),
-      avatar: `img / avatar${avatarNumber}.svg`,
+      avatar: `img/avatar${avatarNumber}.svg`,
       message: getComment(getRandomIntInclusive(1, 2)),
       name: names[nameNumber],
     }
