@@ -1,2 +1,3 @@
-import './util.js';
-import './data.js';
+import {getComment} from 'utils.js';
+
+getComment(2);
