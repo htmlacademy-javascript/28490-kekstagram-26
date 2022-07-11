@@ -1,4 +1,4 @@
-import { getRandomIntInclusive, getComment } from './util.js';
+import { getRandomIntInclusive } from './util.js';
 
 const items = [];
 const comments = [
@@ -33,24 +33,38 @@ const descriptions = [
   'Michelle'
 ];
 
+let counter = 1;
+
+const getComment = (quantity) => {
+  const comment = comments[getRandomIntInclusive(0, 5)];
+  if (quantity === 1) {
+    return comment;
+  } else {
+    let secondSentanceComment = comments[getRandomIntInclusive(0, 5)];
+    while (comment === secondSentanceComment) {
+      secondSentanceComment = comments[getRandomIntInclusive(0, 5)];
+    }
+    return comment.concat(secondSentanceComment);
+  }
+};
+
+const getComments = () => ({
+  id: counter++,
+  avatar: `img/avatar${getRandomIntInclusive(1, 6)}.svg`,
+  message: getComment(getRandomIntInclusive(1, 2)),
+  name: names[getRandomIntInclusive(0, 7)],
+});
+
 for (let i = 1; i < 26; i++) {
-  const avatarNumber = getRandomIntInclusive(1, 6);
   const likes = getRandomIntInclusive(15, 200);
-  const nameNumber = getRandomIntInclusive(0, 7);
   const descriptionNumber = getRandomIntInclusive(0, 10);
   items[i] = {
     id: i,
     url: `photos/${i}.jpg`,
     description: descriptions[descriptionNumber],
     likes: likes,
-    comments: {
-      id: getRandomIntInclusive(1, 100),
-      avatar: `img/avatar${avatarNumber}.svg`,
-      message: getComment(getRandomIntInclusive(1, 2)),
-      name: names[nameNumber],
-    }
+    comments: Array.from({length: getRandomIntInclusive(1, 50)}, getComments),
   };
 }
 
-export {comments};
-
+export {items};
