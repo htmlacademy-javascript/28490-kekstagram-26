@@ -1,4 +1,4 @@
-import {comments} from './data.js';
+import {comments, names, counter} from './data.js';
 
 const getRandomIntInclusive = (min, max) => {
   min = Math.ceil(min);
@@ -19,4 +19,11 @@ const getComment = (quantity) => {
   }
 };
 
-export {getRandomIntInclusive, getComment};
+const getComments = () => ({
+  id: counter++,
+  avatar: `img/avatar${getRandomIntInclusive(1, 6)}.svg`,
+  message: getComment(getRandomIntInclusive(1, 2)),
+  name: names[getRandomIntInclusive(0, 7)],
+});
+
+export {getRandomIntInclusive, getComments};

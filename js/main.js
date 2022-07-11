@@ -1,3 +1,4 @@
-import {getComment} from 'utils.js';
+import { items } from './data.js';
+import { renderMimiatures } from './pictures.js';
 
-getComment(2);
+renderMimiatures(items);
