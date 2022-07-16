@@ -4,11 +4,27 @@ const closeButton = document.querySelector('.big-picture__cancel');
 const bigPictureImg = document.querySelector('.big-picture__img img');
 const commentsLoaderButton = document.querySelector('.comments-loader');
 const socialCommentsCount = document.querySelector('.social__comment-count');
-// const bigPictureSocial = document.querySelector('.big-picture__social');
 const description = document.querySelector('.social__caption');
-let commentsCount = document.querySelector('.comments-count').textContent;
-let likesCount = document.querySelector('.likes-count').textContent;
-// const socialComments = document.querySelector('.social__comments');
+const commentsCount = document.querySelector('.comments-count');
+const likesCount = document.querySelector('.likes-count');
+const socialComments = document.querySelector('.social__comments');
+const bigPictureTemplate = document.querySelector('#comment').querySelector('.comment');
+// const commentText = document.querySelector('.social__text');
+
+const getCommentsBigPicture = (comments) => {
+  const fragment = document.createDocumentFragment();
+
+  comments.forEach((comment) => {
+    const {url, commentText} = comment;
+    const element = bigPictureTemplate.cloneNode(true);
+
+    element.querySelector('.social__picture').src = url;
+    element.querySelector('.social__text').textContent = commentText;
+
+    fragment.appendChild(element);
+  });
+  socialComments.appendChild(fragment);
+};
 
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
@@ -25,9 +41,10 @@ const openBigPicture = (mineature) => {
   commentsLoaderButton.classList.add('hidden');
 
   bigPictureImg.src = mineature.url;
-  likesCount = mineature.textContent;
-  commentsCount = mineature.textContent;
-  description.textContent = mineature.textContent;
+  likesCount.textContent = mineature.likes;
+  commentsCount.textContent = mineature.comments.lenght;
+  description.textContent = mineature.description;
+  getCommentsBigPicture(mineature.comments);
 
   document.addEventListener('keydown', onCloseButtonPress);
   closeButton.addEventListener('click', closeBigPictureEscPress);
@@ -47,5 +64,5 @@ function onCloseButtonPress () {
   });
 }
 
-export { closeBigPictureEscPress, openBigPicture, closeBigPicture, onCloseButtonPress, closeButton };
+export { openBigPicture };
 
