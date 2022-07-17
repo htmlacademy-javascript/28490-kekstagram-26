@@ -50,17 +50,17 @@ const getComment = (quantity) => {
 
 const getComments = () => ({
   id: counter++,
-  avatar: `img/avatar${getRandomIntInclusive(1, 6)}.svg`,
+  avatar: `img/avatar-${getRandomIntInclusive(1, 6)}.svg`,
   message: getComment(getRandomIntInclusive(1, 2)),
   name: names[getRandomIntInclusive(0, 7)],
 });
 
-for (let i = 1; i < 26; i++) {
+for (let i = 0; i < 25; i++) {
   const likes = getRandomIntInclusive(15, 200);
   const descriptionNumber = getRandomIntInclusive(0, 10);
   items[i] = {
-    id: i,
-    url: `photos/${i}.jpg`,
+    id: i + 1,
+    url: `photos/${i + 1}.jpg`,
     description: descriptions[descriptionNumber],
     likes: likes,
     comments: Array.from({length: getRandomIntInclusive(1, 50)}, getComments),
