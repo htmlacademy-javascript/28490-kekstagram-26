@@ -50,7 +50,7 @@ const getComment = (quantity) => {
 
 const getComments = () => ({
   id: counter++,
-  avatar: `img/avatar${getRandomIntInclusive(1, 6)}.svg`,
+  avatar: `img/avatar-${getRandomIntInclusive(1, 6)}.svg`,
   message: getComment(getRandomIntInclusive(1, 2)),
   name: names[getRandomIntInclusive(0, 7)],
 });

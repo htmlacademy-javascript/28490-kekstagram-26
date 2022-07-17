@@ -8,18 +8,19 @@ const description = document.querySelector('.social__caption');
 const commentsCount = document.querySelector('.comments-count');
 const likesCount = document.querySelector('.likes-count');
 const socialComments = document.querySelector('.social__comments');
-const bigPictureTemplate = document.querySelector('#comment').querySelector('.comment');
-// const commentText = document.querySelector('.social__text');
+const bigPictureTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 
-const getCommentsBigPicture = (comments) => {
+const getBigPictureComments = (comments) => {
   const fragment = document.createDocumentFragment();
 
+  socialComments.innerHTML = '';
+
   comments.forEach((comment) => {
-    const {url, commentText} = comment;
+    const {avatar, message} = comment;
     const element = bigPictureTemplate.cloneNode(true);
 
-    element.querySelector('.social__picture').src = url;
-    element.querySelector('.social__text').textContent = commentText;
+    element.querySelector('.social__picture').src = avatar;
+    element.querySelector('.social__text').textContent = message;
 
     fragment.appendChild(element);
   });
@@ -44,7 +45,7 @@ const openBigPicture = (mineature) => {
   likesCount.textContent = mineature.likes;
   commentsCount.textContent = mineature.comments.lenght;
   description.textContent = mineature.description;
-  getCommentsBigPicture(mineature.comments);
+  getBigPictureComments(mineature.comments);
 
   document.addEventListener('keydown', onCloseButtonPress);
   closeButton.addEventListener('click', closeBigPictureEscPress);
@@ -53,6 +54,7 @@ const openBigPicture = (mineature) => {
 function closeBigPictureEscPress () {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+      e.preventDefault();
       closeBigPicture();
     }
   });
