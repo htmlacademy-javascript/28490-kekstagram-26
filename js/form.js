@@ -8,21 +8,23 @@ const closeButton = document.querySelector('.img-upload__cancel');
 const closeForm = () => {
   photoEditModal.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onCloseButtonPress);
-  closeButton.removeEventListener('click', onEscPress);
+
+  document.removeEventListener('keydown', onEscPress);
+  closeButton.removeEventListener('click', onCloseButtonPress);
   hashtagsField.removeEventListener('input', validateForm);
+  hashtagsField.removeEventListener('keydown', onFieldKeydown);
+  descriptionField.removeEventListener('keydown', onFieldKeydown);
 
   imgUploader.value = '';
   hashtagsField.value = '';
   descriptionField.value = '';
 };
 
-const onFieldKeydown = (evt) => {
+function onFieldKeydown (evt) {
   evt.stopPropagation();
-};
+}
 
 function onEscPress () {
-
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       e.preventDefault();
@@ -30,7 +32,6 @@ function onEscPress () {
     }
   });
 }
-
 
 function onCloseButtonPress () {
   closeButton.addEventListener('click', () => {

@@ -33,9 +33,9 @@ const validateForm = () => {
   pristine.validate();
 };
 
-pristine.addValidator(hashtagsField, checkHashtag, 'ggg');
+pristine.addValidator(hashtagsField, checkHashtag, 'Спецсимволы запрещены');
 pristine.addValidator(hashtagsField, checkHashtagsLength, 'Big length');
-pristine.addValidator(hashtagsField, checkHashtagsDublicates, 'Dubl');
-pristine.addValidator(descriptionField, checkDescriptionLength, 'Too long descrintion');
+pristine.addValidator(hashtagsField, checkHashtagsDublicates, 'Теги повторяются');
+pristine.addValidator(descriptionField, checkDescriptionLength, 'Максимальная длина 140 символов');
 
 export { hashtagsField, descriptionField, validateForm };
