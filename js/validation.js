@@ -1,12 +1,11 @@
 const hashtagsField = document.querySelector('.text__hashtags');
 const descriptionField = document.querySelector('.text__description');
 const form = document.querySelector('.img-upload__form');
-const re = /^#[a-zа-я]{1,19}$/i;
+const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'p',
 });
 
 const checkDescriptionLength = () => {
@@ -19,9 +18,10 @@ const checkHashtag = () => {
   return hashtags.every((item) => re.test(item));
 };
 
-const checkHashtagsDublicates = (hashtags) => {
-  const uniqHashtags = new Set(hashtags);
-  return([uniqHashtags]);
+const checkHashtagsDublicates = () => {
+  const hashtags = hashtagsField.value.split(' ').filter((item) => item !== '');
+  const uniqHashtags = new Set(hashtags.map((item) => item.toLowerCase()));
+  return uniqHashtags.size === hashtags.length;
 };
 
 const checkHashtagsLength = () => {
