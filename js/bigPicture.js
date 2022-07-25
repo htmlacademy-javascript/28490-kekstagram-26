@@ -66,5 +66,65 @@ function onCloseButtonPress () {
   });
 }
 
+
+// const showedCommentsCount = bigPicture.querySelector('.showed-comments-count');
+// const commentsPerPage = 5;
+// let showedCommentAmount = commentsPerPage;
+
+// const renderComments = (commentsToRender, showMore) => {
+
+//   const commentsFragment = document.createDocumentFragment();
+
+//   commentsToRender.forEach( (comment) => {
+//     const {avatar, message} = comment;
+//     const element = bigPictureTemplate.cloneNode(true);
+//     const postComments = comment.comments;
+//     const img = comment.querySelector('.social__picture');
+//     img.src = comment.avatar;
+//     comment.querySelector('.social__text').textContent = element.message;
+
+//     commentsFragment.append(element);
+//   });
+
+//   if (!showMore) {
+//     socialComments.innerHTML = '';
+//   }
+//   socialComments.append(commentsFragment);
+// };
+
+// bigPicture.querySelector('.social__caption').textContent = description;
+
+// let commentsToRender = postComments.slice(0, commentsPerPage);
+// renderComments(commentsToRender);
+
+// const clickShowMore = (evt) => {
+//   evt.preventDefault();
+
+
+//   commentsToRender = postComments.slice(showedCommentAmount, showedCommentAmount + commentsPerPage);
+//   showedCommentAmount += commentsPerPage;
+
+//   renderComments(commentsToRender, true);
+
+//   if (postComments.length <= showedCommentAmount) {
+//     commentsLoaderButton.classList.add('hidden');
+//     showedCommentsCount.textContent = `${postComments.length}`;
+//   } else {
+//     showedCommentsCount.textContent = `${showedCommentAmount}`;
+//     commentsLoaderButton.classList.remove('hidden');
+//   }
+// };
+
+// if (postComments.length <= commentsPerPage) {
+//   commentsLoaderButton.classList.add('hidden');
+//   showedCommentsCount.textContent = `${postComments.length}`;
+// }
+// else {
+//   commentsLoaderButton.classList.remove('hidden');
+//   commentsLoaderButton.addEventListener('click', clickShowMore);
+//   showedCommentsCount.textContent = `${commentsPerPage}`;
+// }
+
+
 export { openBigPicture };
 
