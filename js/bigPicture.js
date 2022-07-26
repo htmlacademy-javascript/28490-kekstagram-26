@@ -68,8 +68,8 @@ function onCloseButtonPress () {
 
 
 // const showedCommentsCount = bigPicture.querySelector('.showed-comments-count');
-// const commentsPerPage = 5;
-// let showedCommentAmount = commentsPerPage;
+// const commentsStep = 5;
+// let showedCommentAmount = commentsStep;
 
 // const renderComments = (commentsToRender, showMore) => {
 
@@ -94,15 +94,15 @@ function onCloseButtonPress () {
 
 // bigPicture.querySelector('.social__caption').textContent = description;
 
-// let commentsToRender = postComments.slice(0, commentsPerPage);
+// let commentsToRender = postComments.slice(0, commentsStep);
 // renderComments(commentsToRender);
 
 // const clickShowMore = (evt) => {
 //   evt.preventDefault();
 
 
-//   commentsToRender = postComments.slice(showedCommentAmount, showedCommentAmount + commentsPerPage);
-//   showedCommentAmount += commentsPerPage;
+//   commentsToRender = postComments.slice(showedCommentAmount, showedCommentAmount + commentsStep);
+//   showedCommentAmount += commentsStep;
 
 //   renderComments(commentsToRender, true);
 
@@ -122,7 +122,7 @@ function onCloseButtonPress () {
 // else {
 //   commentsLoaderButton.classList.remove('hidden');
 //   commentsLoaderButton.addEventListener('click', clickShowMore);
-//   showedCommentsCount.textContent = `${commentsPerPage}`;
+//   showedCommentsCount.textContent = `${commentsStep}`;
 // }
 
 
