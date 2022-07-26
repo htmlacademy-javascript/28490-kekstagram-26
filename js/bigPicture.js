@@ -10,6 +10,7 @@ const likesCount = document.querySelector('.likes-count');
 const socialComments = document.querySelector('.social__comments');
 const bigPictureTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 
+
 const getBigPictureComments = (comments) => {
   const fragment = document.createDocumentFragment();
 
@@ -38,8 +39,8 @@ const closeBigPicture = () => {
 const openBigPicture = (mineature) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
-  socialCommentsCount.classList.add('hidden');
-  commentsLoaderButton.classList.add('hidden');
+  socialCommentsCount.classList.remove('hidden');
+  commentsLoaderButton.classList.remove('hidden');
 
   bigPictureImg.src = mineature.url;
   likesCount.textContent = mineature.likes;
