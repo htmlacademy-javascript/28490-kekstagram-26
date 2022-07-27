@@ -1,20 +1,26 @@
-// const scaleValue = document.querySelector('.scale__control--value').style.transform;
-// const scaleValueSmaller = document.querySelector('.scale__control--smaller');
-// const scaleValueBigger = document.querySelector('.scale__control--bigger');
+const scaleElement = document.querySelector('.img-upload__scale');
+const imgElement = document.querySelector('.img-upload__preview img');
+const scaleInputElement = scaleElement.querySelector('.scale__control--value');
 
-// const SCALEMIN = 25;
-// const SCALEMAX = 100;
 
-// const changeSize = () => {
-//   const scaleCounter = 0.55;
+const scaleStep = 25;
+let scaleValue = 100;
 
-//   if ((scaleValue.value >= SCALEMIN) && (scaleValue <= SCALEMAX)) {
-//     scaleValueSmaller.addEventListener('click', () => {
-//       scaleValue.style.transform = scaleCounter - 25;
-//     });
-//     scaleValueBigger.addEventListener('click', () => {
-//       scaleValue.style.tranform = scaleValue.value - 0.25;
-//     });
-//   }
-// };
+
+const scaleHandler = (evt) => {
+
+  if (evt.target.classList.contains('scale__control--bigger') && scaleValue < 100) {
+    scaleValue += scaleStep;
+  }
+
+  if (evt.target.classList.contains('scale__control--smaller') && scaleValue > scaleStep) {
+    scaleValue -= scaleStep;
+  }
+
+  scaleInputElement.value = `${scaleValue}%`;
+  imgElement.style.transform = `scale(${scaleValue / 100})`;
+};
+
+
+scaleElement.addEventListener('click', scaleHandler);
 

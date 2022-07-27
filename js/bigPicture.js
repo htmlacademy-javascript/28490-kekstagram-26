@@ -1,3 +1,5 @@
+import { items } from './data.js';
+
 const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = document.querySelector('.big-picture__cancel');
@@ -10,23 +12,28 @@ const likesCount = document.querySelector('.likes-count');
 const socialComments = document.querySelector('.social__comments');
 const bigPictureTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 
+const showedCommentsCount = bigPicture.querySelector('.showed-comments-count');
+const commentsPerPage = 5;
+let showedCommentAmount = commentsPerPage;
+const commentsStep = items.comments;
 
-const getBigPictureComments = (comments) => {
-  const fragment = document.createDocumentFragment();
 
-  socialComments.innerHTML = '';
+// const getBigPictureComments = (comments) => {
+//   const fragment = document.createDocumentFragment();
 
-  comments.forEach((comment) => {
-    const {avatar, message} = comment;
-    const element = bigPictureTemplate.cloneNode(true);
+//   socialComments.innerHTML = '';
 
-    element.querySelector('.social__picture').src = avatar;
-    element.querySelector('.social__text').textContent = message;
+//   comments.forEach((comment) => {
+//     const {avatar, message} = comment;
+//     const element = bigPictureTemplate.cloneNode(true);
 
-    fragment.appendChild(element);
-  });
-  socialComments.appendChild(fragment);
-};
+//     element.querySelector('.social__picture').src = avatar;
+//     element.querySelector('.social__text').textContent = message;
+
+//     fragment.appendChild(element);
+//   });
+//   socialComments.appendChild(fragment);
+// };
 
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
@@ -35,6 +42,66 @@ const closeBigPicture = () => {
   document.removeEventListener('keydown', onCloseButtonPress);
   closeButton.removeEventListener('click', closeBigPictureEscPress);
 };
+
+const postComments = items.comments;
+
+const getRenderComments = (commentsToRender, showMore) => {
+
+  const commentsFragment = document.createDocumentFragment();
+
+  commentsToRender.forEach( (comment) => {
+
+    const element = bigPictureTemplate.cloneNode(true);
+    const {avatar, message} = comment;
+
+    element.querySelector('.social__picture').src = avatar;
+    element.querySelector('.social__text').textContent = message;
+
+    const img = comment.querySelector('.social__picture');
+    img.src = comment.avatar;
+    comment.querySelector('.social__text').textContent = element.message;
+
+    commentsFragment.append(element);
+  });
+
+  if (!showMore) {
+    socialComments.innerHTML = '';
+  }
+  socialComments.append(commentsFragment);
+};
+
+bigPicture.querySelector('.social__caption').textContent = description;
+
+let commentsToRender = postComments.slice(0, commentsStep);
+getRenderComments(commentsToRender);
+
+const clickShowMore = (evt) => {
+  evt.preventDefault();
+
+
+  commentsToRender = postComments.slice(showedCommentAmount, showedCommentAmount + commentsStep);
+  showedCommentAmount += commentsStep;
+
+  getRenderComments(commentsToRender, true);
+
+  if (postComments.length <= showedCommentAmount) {
+    commentsLoaderButton.classList.add('hidden');
+    showedCommentsCount.textContent = `${postComments.length}`;
+  } else {
+    showedCommentsCount.textContent = `${showedCommentAmount}`;
+    commentsLoaderButton.classList.remove('hidden');
+  }
+};
+
+if (postComments.length <= commentsPerPage) {
+  commentsLoaderButton.classList.add('hidden');
+  showedCommentsCount.textContent = `${postComments.length}`;
+}
+else {
+  commentsLoaderButton.classList.remove('hidden');
+  commentsLoaderButton.addEventListener('click', clickShowMore);
+  showedCommentsCount.textContent = `${commentsStep}`;
+}
 
 const openBigPicture = (mineature) => {
   bigPicture.classList.remove('hidden');
@@ -46,7 +113,7 @@ const openBigPicture = (mineature) => {
   likesCount.textContent = mineature.likes;
   commentsCount.textContent = mineature.comments.lenght;
   description.textContent = mineature.description;
-  getBigPictureComments(mineature.comments);
+  getRenderComments(mineature.comments);
 
   document.addEventListener('keydown', onCloseButtonPress);
   closeButton.addEventListener('click', closeBigPictureEscPress);
@@ -66,65 +133,6 @@ function onCloseButtonPress () {
     closeBigPicture();
   });
 }
-
-
-// const showedCommentsCount = bigPicture.querySelector('.showed-comments-count');
-// const commentsStep = 5;
-// let showedCommentAmount = commentsStep;
-
-// const renderComments = (commentsToRender, showMore) => {
-
-//   const commentsFragment = document.createDocumentFragment();
-
-//   commentsToRender.forEach( (comment) => {
-//     const {avatar, message} = comment;
-//     const element = bigPictureTemplate.cloneNode(true);
-//     const postComments = comment.comments;
-//     const img = comment.querySelector('.social__picture');
-//     img.src = comment.avatar;
-//     comment.querySelector('.social__text').textContent = element.message;
-
-//     commentsFragment.append(element);
-//   });
-
-//   if (!showMore) {
-//     socialComments.innerHTML = '';
-//   }
-//   socialComments.append(commentsFragment);
-// };
-
-// bigPicture.querySelector('.social__caption').textContent = description;
-
-// let commentsToRender = postComments.slice(0, commentsStep);
-// renderComments(commentsToRender);
-
-// const clickShowMore = (evt) => {
-//   evt.preventDefault();
-
-
-//   commentsToRender = postComments.slice(showedCommentAmount, showedCommentAmount + commentsStep);
-//   showedCommentAmount += commentsStep;
-
-//   renderComments(commentsToRender, true);
-
-//   if (postComments.length <= showedCommentAmount) {
-//     commentsLoaderButton.classList.add('hidden');
-//     showedCommentsCount.textContent = `${postComments.length}`;
-//   } else {
-//     showedCommentsCount.textContent = `${showedCommentAmount}`;
-//     commentsLoaderButton.classList.remove('hidden');
-//   }
-// };
-
-// if (postComments.length <= commentsPerPage) {
-//   commentsLoaderButton.classList.add('hidden');
-//   showedCommentsCount.textContent = `${postComments.length}`;
-// }
-// else {
-//   commentsLoaderButton.classList.remove('hidden');
-//   commentsLoaderButton.addEventListener('click', clickShowMore);
-//   showedCommentsCount.textContent = `${commentsStep}`;
-// }
 
 
 export { openBigPicture };
