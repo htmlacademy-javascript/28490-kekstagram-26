@@ -1,5 +1,3 @@
-import { items } from './data.js';
-
 const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = document.querySelector('.big-picture__cancel');
@@ -9,129 +7,84 @@ const socialCommentsCount = document.querySelector('.social__comment-count');
 const description = document.querySelector('.social__caption');
 const commentsCount = document.querySelector('.comments-count');
 const likesCount = document.querySelector('.likes-count');
-const socialComments = document.querySelector('.social__comments');
-const bigPictureTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
+const socialCommentsList = document.querySelector('.social__comments');
+const bigPictureTemplate = document
+  .querySelector('#comment')
+  .content.querySelector('.social__comment');
 
-const showedCommentsCount = bigPicture.querySelector('.showed-comments-count');
-const commentsPerPage = 5;
-let showedCommentAmount = commentsPerPage;
-const commentsStep = items.comments;
+const COMMENTS_BASIS_COUNT = 5;
+let showedCommentAmount = 0;
+let basisComments = null;
 
 
-// const getBigPictureComments = (comments) => {
-//   const fragment = document.createDocumentFragment();
+const getBigPictureComments = () => {
+  const fragment = document.createDocumentFragment();
 
-//   socialComments.innerHTML = '';
+  const currentComments = basisComments.slice(showedCommentAmount, showedCommentAmount + COMMENTS_BASIS_COUNT);
+  showedCommentAmount += currentComments.lenght;
 
-//   comments.forEach((comment) => {
-//     const {avatar, message} = comment;
-//     const element = bigPictureTemplate.cloneNode(true);
+  currentComments.forEach((comment) => {
+    const {avatar, message} = comment;
+    const element = bigPictureTemplate.cloneNode(true);
 
-//     element.querySelector('.social__picture').src = avatar;
-//     element.querySelector('.social__text').textContent = message;
+    element.querySelector('.social__picture').src = avatar;
+    element.querySelector('.social__text').textContent = message;
 
-//     fragment.appendChild(element);
-//   });
-//   socialComments.appendChild(fragment);
-// };
+    fragment.appendChild(element);
+  });
+
+  const commentsCountChildNode = socialCommentsCount.childNodes[0];
+  commentsCountChildNode.nodeValue = `${showedCommentAmount} из `;
+
+  if (showedCommentAmount === basisComments.lenght) {
+    commentsLoaderButton.classList.add('hidden');
+  }
+
+  socialCommentsList.appendChild(fragment);
+};
+
 
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
 
-  document.removeEventListener('keydown', onCloseButtonPress);
-  closeButton.removeEventListener('click', closeBigPictureEscPress);
+  document.removeEventListener('click', onCloseButtonClick);
+  closeButton.removeEventListener('keydown', closeBigPictureEscPress);
+  commentsLoaderButton.removeEventListener('click', onCommentsLoaderButtonClick);
 };
-
-const postComments = items.comments;
-
-const getRenderComments = (commentsToRender, showMore) => {
-
-  const commentsFragment = document.createDocumentFragment();
-
-  commentsToRender.forEach( (comment) => {
-
-    const element = bigPictureTemplate.cloneNode(true);
-    const {avatar, message} = comment;
-
-    element.querySelector('.social__picture').src = avatar;
-    element.querySelector('.social__text').textContent = message;
-
-    const img = comment.querySelector('.social__picture');
-    img.src = comment.avatar;
-    comment.querySelector('.social__text').textContent = element.message;
-
-    commentsFragment.append(element);
-  });
-
-  if (!showMore) {
-    socialComments.innerHTML = '';
-  }
-  socialComments.append(commentsFragment);
-};
-
-bigPicture.querySelector('.social__caption').textContent = description;
-
-let commentsToRender = postComments.slice(0, commentsStep);
-getRenderComments(commentsToRender);
-
-const clickShowMore = (evt) => {
-  evt.preventDefault();
-
-
-  commentsToRender = postComments.slice(showedCommentAmount, showedCommentAmount + commentsStep);
-  showedCommentAmount += commentsStep;
-
-  getRenderComments(commentsToRender, true);
-
-  if (postComments.length <= showedCommentAmount) {
-    commentsLoaderButton.classList.add('hidden');
-    showedCommentsCount.textContent = `${postComments.length}`;
-  } else {
-    showedCommentsCount.textContent = `${showedCommentAmount}`;
-    commentsLoaderButton.classList.remove('hidden');
-  }
-};
-
-if (postComments.length <= commentsPerPage) {
-  commentsLoaderButton.classList.add('hidden');
-  showedCommentsCount.textContent = `${postComments.length}`;
-}
-else {
-  commentsLoaderButton.classList.remove('hidden');
-  commentsLoaderButton.addEventListener('click', clickShowMore);
-  showedCommentsCount.textContent = `${commentsStep}`;
-}
 
 const openBigPicture = (mineature) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
-  socialCommentsCount.classList.remove('hidden');
-  commentsLoaderButton.classList.remove('hidden');
+
 
   bigPictureImg.src = mineature.url;
   likesCount.textContent = mineature.likes;
   commentsCount.textContent = mineature.comments.lenght;
   description.textContent = mineature.description;
-  getRenderComments(mineature.comments);
 
-  document.addEventListener('keydown', onCloseButtonPress);
-  closeButton.addEventListener('click', closeBigPictureEscPress);
+  basisComments = mineature.comments;
+
+  getBigPictureComments();
+
+  document.addEventListener('keydown', closeBigPictureEscPress);
+  closeButton.addEventListener('click', onCloseButtonClick);
+  commentsLoaderButton.addEventListener('click', onCommentsLoaderButtonClick);
 };
 
-function closeBigPictureEscPress () {
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      e.preventDefault();
-      closeBigPicture();
-    }
-  });
+function onCommentsLoaderButtonClick () {
+  getBigPictureComments();
 }
 
-function onCloseButtonPress () {
-  closeButton.addEventListener('click', () => {
+function closeBigPictureEscPress (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
     closeBigPicture();
-  });
+  }
+}
+
+function onCloseButtonClick () {
+  closeBigPicture();
 }
 
 
